@@ -21,6 +21,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"time"
+	"strconv"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/rawdb"
@@ -97,7 +99,15 @@ func runStateTest(fname string, cfg vm.Config, jsonOut, dump bool) error {
 	// Iterate over all the tests, run them and aggregate the results
 	results := make([]StatetestResult, 0, len(testsByName))
 
-	for i := 1; i < 10000; i++ {
+	var test_times, err2 = strconv.Atoi(os.Getenv("TEST_TIMES"))
+
+	if (err2 != nil) {
+		panic(err2)
+	}
+
+	var start_time = time.Now()
+
+	for i := 1; i < test_times; i++ {
 		for key, test := range testsByName {
 			for _, st := range test.Subtests() {
 				// Run the test and aggregate the result
@@ -126,6 +136,10 @@ func runStateTest(fname string, cfg vm.Config, jsonOut, dump bool) error {
 			}
 		}
 	}
+
+	var end_time = time.Now()
+
+	fmt.Println("Runtime: ", (end_time.Sub(start_time)).String())
 	// out, _ := json.MarshalIndent(results, "", "  ")
 	// fmt.Println(string(out))
 	return nil
