@@ -139,7 +139,8 @@ func runStateTest(fname string, cfg vm.Config, jsonOut, dump bool) error {
 
 	var end_time = time.Now()
 
-	fmt.Println("Runtime: ", (end_time.Sub(start_time)).String())
+	fmt.Println("Number of iterations: ", test_times)
+	fmt.Println("Total runtime: ", (end_time.Sub(start_time)).Seconds(), "(s)")
 	// out, _ := json.MarshalIndent(results, "", "  ")
 	// fmt.Println(string(out))
 	return nil
