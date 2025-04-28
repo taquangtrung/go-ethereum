@@ -51,7 +51,7 @@ type StateDB interface {
 	GetRefund() uint64
 
 	GetCommittedState(common.Address, common.Hash) common.Hash
-	GetState(common.Address, common.Hash) common.Hash
+	GetState(common.Address, common.Hash) common.Hash  // TRUNG: Param of State is the contract address and the Hash of the memory slot.
 	SetState(common.Address, common.Hash, common.Hash) common.Hash
 	GetStorageRoot(addr common.Address) common.Hash
 
